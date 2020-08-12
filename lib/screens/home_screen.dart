@@ -21,8 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: HeaderWidget(date: 'dimanche 9 août 2020'),
+        title: HeaderWidget(
+          horizontalMargin: _getHorizontalMargin(context),
+        ),
       ),
       body: Container(
         width: double.infinity,
@@ -31,6 +32,19 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(25),
             child: Column(
               children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(
+                    left: _getHorizontalMargin(context),
+                    bottom: 25,
+                  ),
+                  child: Text(
+                    'Le bilan du dimanche 9 août 2020',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
                 FutureBuilder<ModelStatistics>(
                     future: ServiceData.getStatistics(),
                     builder: (context, snapshot) {
@@ -96,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         Provider.of<ProviderSelectedRegion>(context,
                                 listen: false)
-                            .selectRegion(regions[0].name, regions[0].cities);
+                            .selectRegion(0, regions[0].name, regions[0].cities);
                       });
 
                       return Container(
@@ -104,6 +118,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         margin: EdgeInsets.symmetric(
                           horizontal: _getHorizontalMargin(context),
                           vertical: 25,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.yellow,
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                         child: Wrap(
                           spacing: 25,

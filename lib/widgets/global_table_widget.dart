@@ -13,59 +13,48 @@ class GlobalTableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProviderSelectedRegion _selectedRegion =
-        Provider.of<ProviderSelectedRegion>(context, listen: false);
-
     return Container(
       padding: const EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Tableau de répartition des cas par Région'),
-                  Text('Mise à jour : (09-08-2020 à 18h06)'),
-                ],
-              ),
-              SizedBox(width: 4),
-              Text('site link'),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 24),
+            child: Text('Tableau de répartition des cas par Région'),
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: DataTable(
-              sortColumnIndex: 1,
-              sortAscending: true,
-              columns: [
-                DataColumn(label: Text('Region')),
-                DataColumn(label: Text('Total'), numeric: true),
-                DataColumn(label: Text('En 24h'), numeric: true),
-                DataColumn(label: Text('Details'), numeric: true),
-              ],
-              rows: regions
-                  .map(
-                    (region) => DataRow(
-                      cells: [
-                        DataCell(Text('${region.name}')),
-                        DataCell(Text('${region.totalCases}')),
-                        DataCell(Text('${region.newCases}')),
-                        DataCell(Icon(Icons.navigate_next),
-                            onTap: () =>
-                                _showRegionCities(region, _selectedRegion)),
-                      ],
-                    ),
-                  )
-                  .toList(),
+            child: Consumer<ProviderSelectedRegion>(
+              builder: (context, selectedRegion, widget) => DataTable(
+                sortColumnIndex: 1,
+                sortAscending: true,
+                columns: [
+                  DataColumn(label: Text('Region')),
+                  DataColumn(label: Text('Total'), numeric: true),
+                  DataColumn(label: Text('En 24h'), numeric: true),
+                  DataColumn(label: Text('Details'), numeric: true),
+                ],
+                rows: regions
+                    .asMap()
+                    .map(
+                      (index, region) => MapEntry(
+                        index,
+                        DataRow(
+                          cells: [
+                            DataCell(Text('${region.name}')),
+                            DataCell(Text('${region.totalCases}')),
+                            DataCell(Text('${region.newCases}')),
+                            DataCell(Icon(Icons.navigate_next),
+                                onTap: () => _showRegionCities(
+                                    index, region, selectedRegion)),
+                          ],
+                          selected: index == selectedRegion.selectedIndex,
+                        ),
+                      ),
+                    )
+                    .values
+                    .toList(),
+              ),
             ),
           ),
         ],
@@ -74,7 +63,7 @@ class GlobalTableWidget extends StatelessWidget {
   }
 
   void _showRegionCities(
-      ModelRegion region, ProviderSelectedRegion selectedRegion) {
-    selectedRegion.selectRegion('${region.name}', region.cities);
+      int index, ModelRegion region, ProviderSelectedRegion selectedRegion) {
+    selectedRegion.selectRegion(index, '${region.name}', region.cities);
   }
 }

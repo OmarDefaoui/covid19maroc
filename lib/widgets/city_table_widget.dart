@@ -9,14 +9,14 @@ class CityTableWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
       child: Consumer<ProviderSelectedRegion>(
         builder: (context, selectedRegion, widget) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${selectedRegion.getRegion}'),
+            Padding(
+              padding: const EdgeInsets.only(left: 24),
+              child: Text('${selectedRegion.getRegion}'),
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
