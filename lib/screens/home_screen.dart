@@ -93,15 +93,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (!snapshot.hasData) return Container();
 
                       List<ModelRegion> regions = snapshot.data;
-                      Provider.of<ProviderSelectedRegion>(context,
-                              listen: false)
-                          .selectRegion(regions[0].name, regions[0].cities);
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Provider.of<ProviderSelectedRegion>(context,
+                                listen: false)
+                            .selectRegion(regions[0].name, regions[0].cities);
+                      });
 
-                      return Wrap(
-                        children: [
-                          GlobalTableWidget(regions: regions),
-                          CityTableWidget(),
-                        ],
+                      return Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.symmetric(
+                          horizontal: _getHorizontalMargin(context),
+                          vertical: 25,
+                        ),
+                        child: Wrap(
+                          spacing: 25,
+                          runSpacing: 25,
+                          children: [
+                            GlobalTableWidget(regions: regions),
+                            CityTableWidget(),
+                          ],
+                        ),
                       );
                     }),
               ],
@@ -110,5 +121,20 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  double _getHorizontalMargin(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    print(width);
+    int boxCount;
+    if (width - 1200 - 100 > 0)
+      boxCount = 3;
+    else if (width - 800 - 75 > 0)
+      boxCount = 2;
+    else
+      boxCount = 1;
+    print(boxCount);
+
+    return (width - 400 * boxCount - 25 * (boxCount - 1) - 50) / 2;
   }
 }

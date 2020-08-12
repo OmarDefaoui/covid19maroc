@@ -9,7 +9,6 @@ class CityTableWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(25),
-      margin: const EdgeInsets.all(25),
       decoration: BoxDecoration(
         color: Colors.red,
         borderRadius: BorderRadius.all(Radius.circular(15)),
