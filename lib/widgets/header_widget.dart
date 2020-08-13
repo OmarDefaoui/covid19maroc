@@ -23,6 +23,7 @@ class HeaderWidget extends StatelessWidget {
               color: Colors.green,
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
+            //TODO: to handle
             child: Text(
               'Aujourd\'hui',
               style: TextStyle(

@@ -4,6 +4,7 @@ class DataBoxWidget extends StatelessWidget {
   final String title, cases, newCases;
   final IconData icon;
   final Color color;
+  final bool isPhone;
 
   const DataBoxWidget({
     Key key,
@@ -12,12 +13,13 @@ class DataBoxWidget extends StatelessWidget {
     @required this.newCases,
     @required this.icon,
     @required this.color,
+    @required this.isPhone,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
+      width: isPhone ? double.infinity : 400,
       padding: const EdgeInsets.all(25),
       decoration: BoxDecoration(
         color: color,
