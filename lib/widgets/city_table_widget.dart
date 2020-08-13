@@ -31,7 +31,7 @@ class CityTableWidget extends StatelessWidget {
                       (city) => DataRow(
                         cells: [
                           DataCell(Text('${city.name}')),
-                          DataCell(Text('${city.cases}')),
+                          DataCell(Text('${city.newCases}')),
                         ],
                       ),
                     )

@@ -1,8 +1,18 @@
 class ModelCity {
-  final String name, cases;
+  final String name, newCases;
 
   ModelCity({
     this.name,
-    this.cases,
+    this.newCases,
   });
+
+  factory ModelCity.fromJson(Map<String, dynamic> json) => ModelCity(
+        name: json["name"],
+        newCases: json["newCases"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "newCases": newCases,
+      };
 }

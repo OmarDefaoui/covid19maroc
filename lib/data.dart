@@ -1,9 +1,9 @@
 import 'package:covid19morocco/models/model_city.dart';
+import 'package:covid19morocco/models/model_data.dart';
 import 'package:covid19morocco/models/model_region.dart';
-import 'package:covid19morocco/models/model_statistics.dart';
 
 class Data {
-  static ModelStatistics modelStatistics = ModelStatistics(
+  static ModelData modelData = ModelData(
     date: '11/08/2020',
     totalCases: '35195',
     newCases: '1132',
@@ -17,6 +17,7 @@ class Data {
     newActive: '254',
     totalCritical: '50',
     newCritical: '1',
+    regions: listRegions,
   );
 
   static List<ModelRegion> listRegions = [
@@ -27,11 +28,11 @@ class Data {
       cities: [
         ModelCity(
           name: 'Casa',
-          cases: '100',
+          newCases: '100',
         ),
         ModelCity(
           name: 'Settat',
-          cases: '20',
+          newCases: '20',
         ),
       ],
     ),
@@ -42,15 +43,15 @@ class Data {
       cities: [
         ModelCity(
           name: 'Tanger',
-          cases: '54',
+          newCases: '54',
         ),
         ModelCity(
           name: 'Tetouan',
-          cases: '74',
+          newCases: '74',
         ),
         ModelCity(
           name: 'Hoceima',
-          cases: '25',
+          newCases: '25',
         ),
       ],
     ),
@@ -61,11 +62,11 @@ class Data {
       cities: [
         ModelCity(
           name: 'Fès',
-          cases: '44',
+          newCases: '44',
         ),
         ModelCity(
           name: 'meknes',
-          cases: '7',
+          newCases: '7',
         ),
       ],
     ),
@@ -76,19 +77,19 @@ class Data {
       cities: [
         ModelCity(
           name: 'Marrakech',
-          cases: '74',
+          newCases: '74',
         ),
         ModelCity(
           name: 'Marrakech',
-          cases: '47',
+          newCases: '47',
         ),
         ModelCity(
           name: 'Safi',
-          cases: '58',
+          newCases: '58',
         ),
         ModelCity(
           name: 'Safi',
-          cases: '85',
+          newCases: '85',
         ),
       ],
     ),
@@ -99,19 +100,19 @@ class Data {
       cities: [
         ModelCity(
           name: 'Rabat',
-          cases: '14',
+          newCases: '14',
         ),
         ModelCity(
           name: 'Rabat',
-          cases: '41',
+          newCases: '41',
         ),
         ModelCity(
           name: 'Salé',
-          cases: '25',
+          newCases: '25',
         ),
         ModelCity(
           name: 'Salé',
-          cases: '52',
+          newCases: '52',
         ),
       ],
     ),
@@ -122,15 +123,15 @@ class Data {
       cities: [
         ModelCity(
           name: '​​Daraa',
-          cases: '01',
+          newCases: '01',
         ),
         ModelCity(
           name: '​​Daraa',
-          cases: '10',
+          newCases: '10',
         ),
         ModelCity(
           name: 'tafilalet',
-          cases: '5',
+          newCases: '5',
         ),
       ],
     ),

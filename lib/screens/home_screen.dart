@@ -1,5 +1,5 @@
+import 'package:covid19morocco/models/model_data.dart';
 import 'package:covid19morocco/models/model_region.dart';
-import 'package:covid19morocco/models/model_statistics.dart';
 import 'package:covid19morocco/providers/provider_selected_region.dart';
 import 'package:covid19morocco/services/service_data.dart';
 import 'package:covid19morocco/widgets/city_table_widget.dart';
@@ -9,50 +9,53 @@ import 'package:covid19morocco/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key key}) : super(key: key);
 
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: HeaderWidget(
-          horizontalMargin: _getHorizontalMargin(context),
-        ),
-      ),
-      body: Container(
-        width: double.infinity,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(25),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only(
-                    left: _getHorizontalMargin(context),
-                    bottom: 25,
-                  ),
-                  child: Text(
-                    'Le bilan du dimanche 9 août 2020',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                FutureBuilder<ModelStatistics>(
-                    future: ServiceData.getStatistics(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) return Container();
+    return FutureBuilder<ModelData>(
+        future: ServiceData.getData(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return Center(
+              child: CircularProgressIndicator(),
+            );
 
-                      ModelStatistics statistics = snapshot.data;
+          ModelData data = snapshot.data;
+          List<ModelRegion> regions = data.regions;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Provider.of<ProviderSelectedRegion>(context, listen: false)
+                .selectRegion(0, regions[0].name, regions[0].cities);
+          });
 
-                      return Wrap(
+          return Scaffold(
+            appBar: AppBar(
+              title: HeaderWidget(
+                horizontalMargin: _getHorizontalMargin(context),
+              ),
+            ),
+            body: Container(
+              width: double.infinity,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(25),
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(
+                          left: _getHorizontalMargin(context),
+                          bottom: 25,
+                        ),
+                        child: Text(
+                          'Le bilan du dimanche 9 août 2020',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Wrap(
                         spacing: 25,
                         runSpacing: 25,
                         children: [
@@ -60,60 +63,47 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.orange,
                             icon: Icons.ac_unit,
                             title: "Active",
-                            cases: statistics.totalActive,
-                            newCases: statistics.newActive,
+                            cases: data.totalActive,
+                            newCases: data.newActive,
                           ),
                           DataBoxWidget(
                             color: Colors.orange,
                             icon: Icons.ac_unit,
                             title: "Cases",
-                            cases: statistics.totalCases,
-                            newCases: statistics.newCases,
+                            cases: data.totalCases,
+                            newCases: data.newCases,
                           ),
                           DataBoxWidget(
                             color: Colors.orange,
                             icon: Icons.ac_unit,
                             title: "Deaths",
-                            cases: statistics.totalDeaths,
-                            newCases: statistics.newDeaths,
+                            cases: data.totalDeaths,
+                            newCases: data.newDeaths,
                           ),
                           DataBoxWidget(
                             color: Colors.orange,
                             icon: Icons.ac_unit,
                             title: "Recovred",
-                            cases: statistics.totalRecovred,
-                            newCases: statistics.newRecovred,
+                            cases: data.totalRecovred,
+                            newCases: data.newRecovred,
                           ),
                           DataBoxWidget(
                             color: Colors.orange,
                             icon: Icons.ac_unit,
                             title: "Tests",
-                            cases: statistics.totalTests,
-                            newCases: statistics.newTests,
+                            cases: data.totalTests,
+                            newCases: data.newTests,
                           ),
                           DataBoxWidget(
                             color: Colors.orange,
                             icon: Icons.ac_unit,
                             title: "Critical",
-                            cases: statistics.totalCritical,
-                            newCases: statistics.newCritical,
+                            cases: data.totalCritical,
+                            newCases: data.newCritical,
                           ),
                         ],
-                      );
-                    }),
-                FutureBuilder<List<ModelRegion>>(
-                    future: ServiceData.getRegionsData(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) return Container();
-
-                      List<ModelRegion> regions = snapshot.data;
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        Provider.of<ProviderSelectedRegion>(context,
-                                listen: false)
-                            .selectRegion(0, regions[0].name, regions[0].cities);
-                      });
-
-                      return Container(
+                      ),
+                      Container(
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.symmetric(
                           horizontal: _getHorizontalMargin(context),
@@ -131,19 +121,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             CityTableWidget(),
                           ],
                         ),
-                      );
-                    }),
-              ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
+        });
   }
 
   double _getHorizontalMargin(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    print(width);
     int boxCount;
     if (width - 1200 - 100 > 0)
       boxCount = 3;
@@ -151,7 +140,6 @@ class _HomeScreenState extends State<HomeScreen> {
       boxCount = 2;
     else
       boxCount = 1;
-    print(boxCount);
 
     return (width - 400 * boxCount - 25 * (boxCount - 1) - 50) / 2;
   }
