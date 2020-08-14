@@ -4,7 +4,7 @@ import 'package:covid19morocco/models/model_region.dart';
 
 class Data {
   static ModelData modelData = ModelData(
-    date: 'jeudi 13 août 2020',
+    date: '13/10/2020',
     totalCases: '35195',
     newCases: '1132',
     totalDeaths: '533',

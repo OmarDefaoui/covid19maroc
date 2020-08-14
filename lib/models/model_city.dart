@@ -1,5 +1,5 @@
 class ModelCity {
-  final String name, newCases;
+  String name, newCases;
 
   ModelCity({
     this.name,

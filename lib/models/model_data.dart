@@ -2,7 +2,7 @@ import 'package:covid19morocco/models/model_region.dart';
 import 'package:intl/intl.dart';
 
 class ModelData {
-  final String date,
+  String date,
       totalCases,
       newCases,
       totalDeaths,
@@ -15,7 +15,7 @@ class ModelData {
       newCritical,
       totalTests,
       newTests;
-  final List<ModelRegion> regions;
+  List<ModelRegion> regions;
 
   ModelData({
     this.date,
@@ -35,7 +35,7 @@ class ModelData {
   });
 
   factory ModelData.fromJson(Map<String, dynamic> json) => ModelData(
-        date: DateFormat("yMMMMEEEEd", 'fr').format(
+        date: DateFormat("dd/MM/yyyy").format(
             DateTime.fromMillisecondsSinceEpoch(
                 int.parse(json["date"].toString()))),
         totalCases: json["totalCases"],

@@ -1,3 +1,4 @@
+import 'package:covid19morocco/admin/login_screen.dart';
 import 'package:covid19morocco/providers/provider_selected_region.dart';
 import 'package:covid19morocco/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: HomeScreen(),
+        home: LoginScreen(),
       ),
     );
   }
