@@ -8,6 +8,7 @@ import 'package:covid19morocco/widgets/global_table_widget.dart';
 import 'package:covid19morocco/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -49,6 +50,7 @@ class HomeScreen extends StatelessWidget {
             appBar: AppBar(
               title: HeaderWidget(
                 horizontalMargin: horizontaleMargin,
+                date: data.date,
               ),
             ),
             body: Container(
@@ -65,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                           bottom: 25,
                         ),
                         child: Text(
-                          'Le bilan du ${data.date}',
+                          "Le bilan du ${DateFormat('dd/MM/yyyy').format(DateTime.parse(data.date))}",
                           style: TextStyle(
                             color: Colors.black,
                           ),
@@ -121,6 +123,14 @@ class HomeScreen extends StatelessWidget {
                             title: "Critical",
                             cases: data.totalCritical,
                             newCases: data.newCritical,
+                            isPhone: isPhone,
+                          ),
+                          DataBoxWidget(
+                            color: Colors.orange,
+                            icon: Icons.ac_unit,
+                            title: "ArtificialRespiration",
+                            cases: data.totalArtificialRespiration,
+                            newCases: data.newArtificialRespiration,
                             isPhone: isPhone,
                           ),
                         ],

@@ -1,5 +1,4 @@
 import 'package:covid19morocco/models/model_region.dart';
-import 'package:intl/intl.dart';
 
 class ModelData {
   String date,
@@ -39,8 +38,7 @@ class ModelData {
   });
 
   factory ModelData.fromJson(Map<String, dynamic> json) => ModelData(
-        date: DateFormat('dd/MM/yyyy')
-            .format(DateTime.parse(json["date"].toString())),
+        date: json["date"],
         totalCases: json["totalCases"],
         newCases: json["newCases"],
         totalDeaths: json["totalDeaths"] ?? '-',
