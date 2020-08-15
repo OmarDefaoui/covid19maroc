@@ -12,7 +12,7 @@ class AddDataService {
       await firestore()
           .collection('covid19maroc')
           .doc('history')
-          .collection(data.date)
+          .collection(data.date.split(' ')[0].trim())
           .doc('data')
           .set(data.toJson());
       return true;

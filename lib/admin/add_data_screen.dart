@@ -107,6 +107,11 @@ class _AddDataScreenState extends State<AddDataScreen> {
                           (value) => data.totalCritical = value,
                           (value) => data.newCritical = value),
                       twoTextField(
+                          'totalArtificialRespiration',
+                          'newArtificialRespiration',
+                          (value) => data.totalArtificialRespiration = value,
+                          (value) => data.newArtificialRespiration = value),
+                      twoTextField(
                           'totalNegatifTests',
                           'newNegatifTests',
                           (value) => data.totalTests = value,
@@ -116,10 +121,18 @@ class _AddDataScreenState extends State<AddDataScreen> {
                       SizedBox(height: _fieldDistance * 4),
                       _isPerforming
                           ? Center(child: CircularProgressIndicator())
-                          : FlatButton(
+                          : Container(
+                              width: 200,
+                              height: 60,
                               color: Colors.blue,
-                              onPressed: _submit,
-                              child: Text('Submit'),
+                              alignment: Alignment.center,
+                              child: GestureDetector(
+                                onLongPress: _submit,
+                                child: Text(
+                                  'Submit',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
                             ),
                     ],
                   ),
@@ -249,6 +262,24 @@ class _AddDataScreenState extends State<AddDataScreen> {
       setState(() {
         _isPerforming = true;
       });
+
+      //Check if newCases in cities matches with region newCases
+      for (ModelRegion region in data.regions) {
+        int total = 0;
+        for (ModelCity city in region.cities) {
+          total += int.parse(city.newCases);
+        }
+        if (total != int.parse(region.newCases)) {
+          setState(() => _isPerforming = false);
+
+          _scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: Text(
+                'The sum of city cases doesn\'t match with region: ${region.name} newCases'),
+            duration: Duration(seconds: 3),
+          ));
+          return;
+        }
+      }
 
       // add data
       bool addSuccess = await AddDataService.addData(data);

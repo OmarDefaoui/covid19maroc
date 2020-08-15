@@ -13,6 +13,8 @@ class ModelData {
       newActive,
       totalCritical,
       newCritical,
+      totalArtificialRespiration,
+      newArtificialRespiration,
       totalTests,
       newTests;
   List<ModelRegion> regions;
@@ -29,15 +31,16 @@ class ModelData {
     this.newActive,
     this.totalCritical,
     this.newCritical,
+    this.totalArtificialRespiration,
+    this.newArtificialRespiration,
     this.totalTests,
     this.newTests,
     this.regions,
   });
 
   factory ModelData.fromJson(Map<String, dynamic> json) => ModelData(
-        date: DateFormat("dd/MM/yyyy").format(
-            DateTime.fromMillisecondsSinceEpoch(
-                int.parse(json["date"].toString()))),
+        date: DateFormat('dd/MM/yyyy')
+            .format(DateTime.parse(json["date"].toString())),
         totalCases: json["totalCases"],
         newCases: json["newCases"],
         totalDeaths: json["totalDeaths"] ?? '-',
@@ -48,6 +51,8 @@ class ModelData {
         newActive: json["newActive"] ?? '-',
         totalCritical: json["totalCritical"] ?? '-',
         newCritical: json["newCritical"] ?? '-',
+        totalArtificialRespiration: json["totalArtificialRespiration"] ?? '-',
+        newArtificialRespiration: json["newArtificialRespiration"] ?? '-',
         totalTests: json["totalTests"] ?? '-',
         newTests: json["newTests"] ?? '-',
         regions: List<ModelRegion>.from(
@@ -66,6 +71,8 @@ class ModelData {
         "newActive": newActive,
         "totalCritical": totalCritical,
         "newCritical": newCritical,
+        "totalArtificialRespiration": totalArtificialRespiration,
+        "newArtificialRespiration": newArtificialRespiration,
         "totalTests": totalTests,
         "newTests": newTests,
         "regions": List<dynamic>.from(regions.map((region) => region.toJson())),

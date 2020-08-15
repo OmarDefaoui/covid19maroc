@@ -94,8 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
         _isPerforming = true;
       });
 
-      print(_email);
-
       //login user
       bool loginSuccess = await AuthService.login(context, _email, _password);
 
