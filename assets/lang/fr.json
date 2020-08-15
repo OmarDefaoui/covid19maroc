@@ -1,0 +1,19 @@
+{
+    "cases": "CAS CONFIRMÉS",
+    "deaths": "DÉCÈS",
+    "active": "CAS EN COURS DE TRAITEMENT",
+    "recovred": "GUÉRIS",
+    "negatifTests": "CAS EXCLUS SUITE À UN RÉSULTAT NÉGATIF",
+    "critical": "CAS CRITIQUES",
+    "artificialRespiration": "CAS SOUS RESPIRATION ARTIFICIELLE",
+    "today": "Aujourd'hui",
+    "notToday": "Pas aujourd'hui",
+    "dateFormat": "dd/MM/yyyy",
+    "cities": "Villes",
+    "h24": "En 24h",
+    "tableDesc": "Tableau de répartition des cas par Région",
+    "regions": "Régions",
+    "total": "Totale",
+    "details": "Détails",
+    "bilan": "Le bilan du"
+}

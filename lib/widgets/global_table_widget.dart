@@ -1,16 +1,19 @@
 import 'package:covid19morocco/models/model_region.dart';
 import 'package:covid19morocco/providers/provider_selected_region.dart';
+import 'package:covid19morocco/services/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GlobalTableWidget extends StatelessWidget {
   final List<ModelRegion> regions;
   final double width;
+  final AppLocalizations lang;
 
   const GlobalTableWidget({
     Key key,
     @required this.regions,
     @required this.width,
+    @required this.lang,
   }) : super(key: key);
 
   @override
@@ -22,7 +25,7 @@ class GlobalTableWidget extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 24),
-          child: Text('Tableau de répartition des cas par Région'),
+          child: Text("${lang.translate('tableDesc')}"),
         ),
         Scrollbar(
           controller: _scrollController,
@@ -36,10 +39,14 @@ class GlobalTableWidget extends StatelessWidget {
                 columnSpacing: _getColumnSpacing(width),
                 sortAscending: true,
                 columns: [
-                  DataColumn(label: Text('Region')),
-                  DataColumn(label: Text('Total'), numeric: true),
-                  DataColumn(label: Text('En 24h'), numeric: true),
-                  DataColumn(label: Text('Details'), numeric: true),
+                  DataColumn(label: Text("${lang.translate('regions')}")),
+                  DataColumn(
+                      label: Text("${lang.translate('total')}"), numeric: true),
+                  DataColumn(
+                      label: Text("${lang.translate('h24')}"), numeric: true),
+                  DataColumn(
+                      label: Text("${lang.translate('details')}"),
+                      numeric: true),
                 ],
                 rows: regions
                     .asMap()

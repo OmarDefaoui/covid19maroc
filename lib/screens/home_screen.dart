@@ -1,6 +1,8 @@
 import 'package:covid19morocco/models/model_data.dart';
 import 'package:covid19morocco/models/model_region.dart';
+import 'package:covid19morocco/providers/provider_language.dart';
 import 'package:covid19morocco/providers/provider_selected_region.dart';
+import 'package:covid19morocco/services/app_localizations.dart';
 import 'package:covid19morocco/services/service_data.dart';
 import 'package:covid19morocco/widgets/city_table_widget.dart';
 import 'package:covid19morocco/widgets/data_box_widget.dart';
@@ -12,14 +14,20 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key key}) : super(key: key);
+  final bool isArabic;
+
+  const HomeScreen({
+    Key key,
+    @required this.isArabic,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('fr');
+    AppLocalizations lang = AppLocalizations.of(context);
 
     return FutureBuilder<ModelData>(
-        future: ServiceData.getData(),
+        future: ServiceData.getLocalData(isArabic),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(
@@ -51,6 +59,7 @@ class HomeScreen extends StatelessWidget {
               title: HeaderWidget(
                 horizontalMargin: horizontaleMargin,
                 date: data.date,
+                lang: lang,
               ),
             ),
             body: Container(
@@ -61,16 +70,38 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        alignment: Alignment.centerLeft,
+                        width: double.infinity,
                         padding: EdgeInsets.only(
                           left: horizontaleMargin,
+                          right: horizontaleMargin,
                           bottom: 25,
                         ),
-                        child: Text(
-                          "Le bilan du ${DateFormat('dd/MM/yyyy').format(DateTime.parse(data.date))}",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceBetween,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Text(
+                              "${lang.translate('bilan')} ${DateFormat(lang.translate('dateFormat').toString()).format(DateTime.parse(data.date))}",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            Consumer<ProviderLanguage>(
+                              builder: (context, providerLanguage, _) => Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Français'),
+                                  Switch(
+                                    value: providerLanguage.isFirstLanguage,
+                                    onChanged: (value) {
+                                      providerLanguage.setLocal(value);
+                                    },
+                                  ),
+                                  Text('العربية'),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Wrap(
@@ -80,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                           DataBoxWidget(
                             color: Colors.orange,
                             icon: Icons.ac_unit,
-                            title: "Active",
+                            title: "${lang.translate('active')}",
                             cases: data.totalActive,
                             newCases: data.newActive,
                             isPhone: isPhone,
@@ -88,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                           DataBoxWidget(
                             color: Colors.orange,
                             icon: Icons.ac_unit,
-                            title: "Cases",
+                            title: "${lang.translate('cases')}",
                             cases: data.totalCases,
                             newCases: data.newCases,
                             isPhone: isPhone,
@@ -96,7 +127,7 @@ class HomeScreen extends StatelessWidget {
                           DataBoxWidget(
                             color: Colors.orange,
                             icon: Icons.ac_unit,
-                            title: "Deaths",
+                            title: "${lang.translate('deaths')}",
                             cases: data.totalDeaths,
                             newCases: data.newDeaths,
                             isPhone: isPhone,
@@ -104,7 +135,7 @@ class HomeScreen extends StatelessWidget {
                           DataBoxWidget(
                             color: Colors.orange,
                             icon: Icons.ac_unit,
-                            title: "Recovred",
+                            title: "${lang.translate('recovred')}",
                             cases: data.totalRecovred,
                             newCases: data.newRecovred,
                             isPhone: isPhone,
@@ -112,7 +143,7 @@ class HomeScreen extends StatelessWidget {
                           DataBoxWidget(
                             color: Colors.orange,
                             icon: Icons.ac_unit,
-                            title: "Tests",
+                            title: "${lang.translate('negatifTests')}",
                             cases: data.totalTests,
                             newCases: data.newTests,
                             isPhone: isPhone,
@@ -120,7 +151,7 @@ class HomeScreen extends StatelessWidget {
                           DataBoxWidget(
                             color: Colors.orange,
                             icon: Icons.ac_unit,
-                            title: "Critical",
+                            title: "${lang.translate('critical')}",
                             cases: data.totalCritical,
                             newCases: data.newCritical,
                             isPhone: isPhone,
@@ -128,7 +159,7 @@ class HomeScreen extends StatelessWidget {
                           DataBoxWidget(
                             color: Colors.orange,
                             icon: Icons.ac_unit,
-                            title: "ArtificialRespiration",
+                            title: "${lang.translate('artificialRespiration')}",
                             cases: data.totalArtificialRespiration,
                             newCases: data.newArtificialRespiration,
                             isPhone: isPhone,
@@ -153,8 +184,11 @@ class HomeScreen extends StatelessWidget {
                             GlobalTableWidget(
                               regions: regions,
                               width: width,
+                              lang: lang,
                             ),
-                            CityTableWidget(),
+                            CityTableWidget(
+                              lang: lang,
+                            ),
                           ],
                         ),
                       ),

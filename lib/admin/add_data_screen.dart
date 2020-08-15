@@ -4,7 +4,6 @@ import 'package:covid19morocco/admin/login_screen.dart';
 import 'package:covid19morocco/models/model_city.dart';
 import 'package:covid19morocco/models/model_data.dart';
 import 'package:covid19morocco/models/model_region.dart';
-import 'package:covid19morocco/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class AddDataScreen extends StatefulWidget {
@@ -294,10 +293,22 @@ class _AddDataScreenState extends State<AddDataScreen> {
       });
 
       //Check if newCases in cities matches with region newCases
+      //and if there the two lang for the name
       for (ModelRegion region in data.regions) {
         int total = 0;
         for (ModelCity city in region.cities) {
           total += int.parse(city.newCases);
+
+          //check availability of two lang
+          if (!city.name.contains(':')) {
+            setState(() => _isPerforming = false);
+            _scaffoldKey.currentState.showSnackBar(SnackBar(
+              content: Text(
+                  'Please provide fr and ar name separated with : => prob in ${city.name}'),
+              duration: Duration(seconds: 5),
+            ));
+            return;
+          }
         }
         if (total != int.parse(region.newCases)) {
           setState(() => _isPerforming = false);
@@ -305,7 +316,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
           _scaffoldKey.currentState.showSnackBar(SnackBar(
             content: Text(
                 'The sum of city cases doesn\'t match with region: ${region.name} newCases'),
-            duration: Duration(seconds: 3),
+            duration: Duration(seconds: 5),
           ));
           return;
         }
@@ -324,7 +335,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
 
       if (addSuccess) {
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
+          MaterialPageRoute(builder: (BuildContext context) => AddDataScreen()),
           (Route<dynamic> route) => false,
         );
       } else {
@@ -332,7 +343,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
 
         _scaffoldKey.currentState.showSnackBar(SnackBar(
           content: Text('Error during adding data'),
-          duration: Duration(seconds: 3),
+          duration: Duration(seconds: 5),
         ));
       }
     }

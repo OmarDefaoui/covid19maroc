@@ -37,7 +37,8 @@ class ModelData {
     this.regions,
   });
 
-  factory ModelData.fromJson(Map<String, dynamic> json) => ModelData(
+  factory ModelData.fromJson(Map<String, dynamic> json, bool isArabic) =>
+      ModelData(
         date: json["date"],
         totalCases: json["totalCases"],
         newCases: json["newCases"],
@@ -53,8 +54,8 @@ class ModelData {
         newArtificialRespiration: json["newArtificialRespiration"] ?? '-',
         totalTests: json["totalTests"] ?? '-',
         newTests: json["newTests"] ?? '-',
-        regions: List<ModelRegion>.from(
-            json["regions"].map((region) => ModelRegion.fromJson(region))),
+        regions: List<ModelRegion>.from(json["regions"]
+            .map((region) => ModelRegion.fromJson(region, isArabic))),
       );
 
   Map<String, dynamic> toJson() => {

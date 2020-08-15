@@ -4,18 +4,18 @@ import 'package:firebase/firebase.dart';
 import 'package:firebase/firestore.dart';
 
 class ServiceData {
-  static Future<ModelData> getData() async {
+  static Future<ModelData> getData(bool isArabic) async {
     try {
       DocumentSnapshot ref =
           await firestore().collection('covid19maroc').doc('data').get();
       print(ref.data());
-      return ModelData.fromJson(ref.data());
+      return ModelData.fromJson(ref.data(), isArabic);
     } catch (error) {
       throw Exception('error $error');
     }
   }
 
-  static Future<ModelData> getHistoryData(String date) async {
+  static Future<ModelData> getHistoryData(String date, bool isArabic) async {
     // date must be: yyyy-MM-dd
     try {
       DocumentSnapshot ref = await firestore()
@@ -25,13 +25,13 @@ class ServiceData {
           .doc('data')
           .get();
       print(ref.data());
-      return ModelData.fromJson(ref.data());
+      return ModelData.fromJson(ref.data(), isArabic);
     } catch (error) {
       throw Exception('error $error');
     }
   }
 
-  static Future<ModelData> getLocalData() async {
+  static Future<ModelData> getLocalData(bool isArabic) async {
     return Data.modelData;
   }
 }

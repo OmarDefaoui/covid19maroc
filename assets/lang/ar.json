@@ -1,0 +1,19 @@
+{
+    "cases": "الحالات المؤكدة",
+    "deaths": "الوفيات",
+    "active": "حالات تتلقى العلاج",
+    "recovred": "المتعافون",
+    "negatifTests": "الحالات المستبعدة",
+    "critical": "الحالات الحرجة",
+    "artificialRespiration": "حالات التنفس الاصطناعي",
+    "today": "اليوم",
+    "notToday": "ليس اليوم",
+    "dateFormat": "yyyy/MM/dd",
+    "cities": "المدن",
+    "h24": "في 24 ساعة",
+    "tableDesc": "جدول توزيع الحالات حسب الجهات",
+    "regions": "الجهات",
+    "total": "المجموع",
+    "details": "التفاصيل",
+    "bilan": "إحصائيات"
+}

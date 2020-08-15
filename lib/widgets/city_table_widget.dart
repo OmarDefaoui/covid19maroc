@@ -1,9 +1,15 @@
 import 'package:covid19morocco/providers/provider_selected_region.dart';
+import 'package:covid19morocco/services/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CityTableWidget extends StatelessWidget {
-  const CityTableWidget({Key key}) : super(key: key);
+  final AppLocalizations lang;
+
+  const CityTableWidget({
+    Key key,
+    @required this.lang,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +27,9 @@ class CityTableWidget extends StatelessWidget {
               sortColumnIndex: 1,
               sortAscending: true,
               columns: [
-                DataColumn(label: Text('Villes')),
-                DataColumn(label: Text('En 24h'), numeric: true),
+                DataColumn(label: Text("${lang.translate('cities')}")),
+                DataColumn(
+                    label: Text("${lang.translate('h24')}"), numeric: true),
               ],
               rows: selectedRegion.getCityCases
                   .map(

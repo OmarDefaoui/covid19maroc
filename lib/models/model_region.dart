@@ -11,12 +11,13 @@ class ModelRegion {
     this.cities,
   });
 
-  factory ModelRegion.fromJson(Map<String, dynamic> json) => ModelRegion(
-        name: json["name"],
+  factory ModelRegion.fromJson(Map<String, dynamic> json, bool isArabic) =>
+      ModelRegion(
+        name: json["name"].toString().split(':')[isArabic ? 1 : 0].trim(),
         newCases: json["newCases"],
         totalCases: json["totalCases"],
         cities: List<ModelCity>.from(
-            json["cities"].map((city) => ModelCity.fromJson(city))),
+            json["cities"].map((city) => ModelCity.fromJson(city, isArabic))),
       );
 
   Map<String, dynamic> toJson() => {

@@ -1,13 +1,16 @@
+import 'package:covid19morocco/services/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class HeaderWidget extends StatelessWidget {
   final double horizontalMargin;
   final String date;
+  final AppLocalizations lang;
 
   const HeaderWidget({
     Key key,
     @required this.horizontalMargin,
     @required this.date,
+    @required this.lang,
   }) : super(key: key);
 
   @override
@@ -20,7 +23,7 @@ class HeaderWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset('images/covid19.png'),
+          Image.asset('assets/images/covid19.png'),
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
@@ -28,7 +31,9 @@ class HeaderWidget extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
             child: Text(
-              isNewData ? 'Aujourd\'hui' : 'Pas d\'aujoud\'ui',
+              isNewData
+                  ? "${lang.translate('today')}"
+                  : "${lang.translate('notToday')}",
               style: TextStyle(
                 color: Colors.white,
               ),
