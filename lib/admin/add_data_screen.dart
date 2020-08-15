@@ -19,10 +19,20 @@ class _AddDataScreenState extends State<AddDataScreen> {
   final _formKey = GlobalKey<FormState>();
 
   ModelData data = ModelData(regions: [
-    ModelRegion(name: 'region1', cities: []),
-    ModelRegion(name: 'region2', cities: []),
-    ModelRegion(name: 'region3', cities: []),
-    ModelRegion(name: 'region4', cities: []),
+    ModelRegion(name: 'Casa Settat​ : الدار البيضاء سطات', cities: []),
+    ModelRegion(name: 'Marrakech Safi : مراكش أسفي', cities: []),
+    ModelRegion(name: 'Fès Meknès : فاس مكناس', cities: []),
+    ModelRegion(
+        name: 'Tanger Tétouan Al-Hoceïma : طنجة تطوان الحسيمة', cities: []),
+    ModelRegion(name: 'Rabat Salé Kénitra​ : الرباط سلا القنيطرة', cities: []),
+    ModelRegion(name: 'Beni-Mellal Khénifra​​ : بني ملال خنيفرة', cities: []),
+    ModelRegion(name: 'Drâa Tafilalet : درعة تافيلالت', cities: []),
+    ModelRegion(name: 'Oriental : الشرق', cities: []),
+    ModelRegion(name: 'Souss Massa : سوس ماسة', cities: []),
+    ModelRegion(name: 'Dakhla Oued-Ed-Dahab : الداخلة وادي الذهب', cities: []),
+    ModelRegion(name: 'Guelmim Oued-Noun : كلميم واد نون', cities: []),
+    ModelRegion(
+        name: 'Laâyoune Sakia-El-Hamra : العيون الساقية الحمراء', cities: []),
   ]);
   bool _isPerforming = false;
 
@@ -82,38 +92,38 @@ class _AddDataScreenState extends State<AddDataScreen> {
                       ),
                       SizedBox(height: _fieldDistance),
                       twoTextField(
-                          'totalCases',
-                          'newCases',
+                          'الحالات المؤكدة',
+                          'New Cases',
                           (value) => data.totalCases = value,
                           (value) => data.newCases = value),
                       twoTextField(
-                          'totalDeaths',
-                          'newDeaths',
+                          'الوفيات',
+                          'New Deaths',
                           (value) => data.totalDeaths = value,
                           (value) => data.newDeaths = value),
                       twoTextField(
-                          'totalRecovred',
-                          'newRecovred',
+                          'المتعافون',
+                          'New Recovred',
                           (value) => data.totalRecovred = value,
                           (value) => data.newRecovred = value),
                       twoTextField(
-                          'totalActive',
-                          'newActive',
+                          'حالات تتلقى العلاج',
+                          'New Active',
                           (value) => data.totalActive = value,
                           (value) => data.newActive = value),
                       twoTextField(
-                          'totalCritical',
-                          'newCritical',
+                          'الحالات الحرجة',
+                          'New Critical',
                           (value) => data.totalCritical = value,
                           (value) => data.newCritical = value),
                       twoTextField(
-                          'totalArtificialRespiration',
-                          'newArtificialRespiration',
+                          'حالات التنفس الاصطناعي',
+                          'New ArtificialRespiration',
                           (value) => data.totalArtificialRespiration = value,
                           (value) => data.newArtificialRespiration = value),
                       twoTextField(
-                          'totalNegatifTests',
-                          'newNegatifTests',
+                          'الحالات المستبعدة',
+                          'New NegatifTests',
                           (value) => data.totalTests = value,
                           (value) => data.newTests = value),
 
@@ -186,14 +196,34 @@ class _AddDataScreenState extends State<AddDataScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 20),
-                                  child: FlatButton(
-                                    color: Colors.blue,
-                                    onPressed: () {
-                                      setState(() {
-                                        region.cities.add(ModelCity());
-                                      });
-                                    },
-                                    child: Text('Add city'),
+                                  child: Row(
+                                    children: [
+                                      FlatButton(
+                                        color: Colors.blue,
+                                        onPressed: () {
+                                          setState(() {
+                                            region.cities.add(ModelCity());
+                                          });
+                                        },
+                                        child: Text(
+                                          'Add city',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      FlatButton(
+                                        color: Colors.red,
+                                        onPressed: () {
+                                          setState(() {
+                                            region.cities.removeLast();
+                                          });
+                                        },
+                                        child: Text(
+                                          'Remove city',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -280,6 +310,14 @@ class _AddDataScreenState extends State<AddDataScreen> {
           return;
         }
       }
+
+      //sort data
+      for (ModelRegion region in data.regions) {
+        region.cities.sort(
+            (a, b) => int.parse(b.newCases).compareTo(int.parse(a.newCases)));
+      }
+      data.regions.sort(
+          (a, b) => int.parse(b.newCases).compareTo(int.parse(a.newCases)));
 
       // add data
       bool addSuccess = await AddDataService.addData(data);

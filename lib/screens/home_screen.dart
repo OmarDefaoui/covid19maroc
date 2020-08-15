@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
     initializeDateFormatting('fr');
 
     return FutureBuilder<ModelData>(
-        future: ServiceData.getLocalData(),
+        future: ServiceData.getData(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(
