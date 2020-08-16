@@ -56,6 +56,7 @@ class HomeScreen extends StatelessWidget {
 
           return Scaffold(
             appBar: AppBar(
+              backgroundColor: Colors.white,
               title: HeaderWidget(
                 horizontalMargin: horizontaleMargin,
                 date: data.date,
@@ -79,11 +80,14 @@ class HomeScreen extends StatelessWidget {
                         child: Wrap(
                           alignment: WrapAlignment.spaceBetween,
                           crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 4,
                           children: [
                             Text(
                               "${lang.translate('bilan')} ${DateFormat(lang.translate('dateFormat').toString()).format(DateTime.parse(data.date))}",
                               style: TextStyle(
                                 color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 18,
                               ),
                             ),
                             Consumer<ProviderLanguage>(
@@ -106,59 +110,59 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Wrap(
                         spacing: 25,
-                        runSpacing: 25,
+                        runSpacing: 20,
                         children: [
                           DataBoxWidget(
-                            color: Colors.orange,
-                            icon: Icons.ac_unit,
-                            title: "${lang.translate('active')}",
-                            cases: data.totalActive,
-                            newCases: data.newActive,
-                            isPhone: isPhone,
-                          ),
-                          DataBoxWidget(
-                            color: Colors.orange,
-                            icon: Icons.ac_unit,
-                            title: "${lang.translate('cases')}",
-                            cases: data.totalCases,
-                            newCases: data.newCases,
-                            isPhone: isPhone,
-                          ),
-                          DataBoxWidget(
-                            color: Colors.orange,
-                            icon: Icons.ac_unit,
-                            title: "${lang.translate('deaths')}",
-                            cases: data.totalDeaths,
-                            newCases: data.newDeaths,
-                            isPhone: isPhone,
-                          ),
-                          DataBoxWidget(
-                            color: Colors.orange,
-                            icon: Icons.ac_unit,
+                            color: Colors.green,
+                            icon: Icons.tag_faces_outlined,
                             title: "${lang.translate('recovred')}",
                             cases: data.totalRecovred,
                             newCases: data.newRecovred,
                             isPhone: isPhone,
                           ),
                           DataBoxWidget(
-                            color: Colors.orange,
-                            icon: Icons.ac_unit,
+                            color: Colors.orangeAccent,
+                            icon: Icons.coronavirus_outlined,
+                            title: "${lang.translate('cases')}",
+                            cases: data.totalCases,
+                            newCases: data.newCases,
+                            isPhone: isPhone,
+                          ),
+                          DataBoxWidget(
+                            color: Colors.red,
+                            icon: Icons.person_outline,
+                            title: "${lang.translate('deaths')}",
+                            cases: data.totalDeaths,
+                            newCases: data.newDeaths,
+                            isPhone: isPhone,
+                          ),
+                          DataBoxWidget(
+                            color: Colors.blueAccent,
+                            icon: Icons.check_circle_outline,
                             title: "${lang.translate('negatifTests')}",
                             cases: data.totalTests,
                             newCases: data.newTests,
                             isPhone: isPhone,
                           ),
                           DataBoxWidget(
-                            color: Colors.orange,
-                            icon: Icons.ac_unit,
+                            color: Colors.yellow[600],
+                            icon: Icons.local_hotel_outlined,
+                            title: "${lang.translate('active')}",
+                            cases: data.totalActive,
+                            newCases: data.newActive,
+                            isPhone: isPhone,
+                          ),
+                          DataBoxWidget(
+                            color: Colors.pinkAccent,
+                            icon: Icons.local_hospital_outlined,
                             title: "${lang.translate('critical')}",
                             cases: data.totalCritical,
                             newCases: data.newCritical,
                             isPhone: isPhone,
                           ),
                           DataBoxWidget(
-                            color: Colors.orange,
-                            icon: Icons.ac_unit,
+                            color: Colors.purpleAccent,
+                            icon: Icons.view_carousel_outlined,
                             title: "${lang.translate('artificialRespiration')}",
                             cases: data.totalArtificialRespiration,
                             newCases: data.newArtificialRespiration,
@@ -167,15 +171,23 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                       Container(
-                        alignment: Alignment.centerLeft,
+                        width: double.infinity,
                         margin: EdgeInsets.symmetric(
                           horizontal: horizontaleMargin,
                           vertical: 25,
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 25),
                         decoration: BoxDecoration(
-                          color: Colors.yellow,
+                          color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(15)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 0.1,
+                              spreadRadius: 0.0,
+                              offset: Offset(0, 0),
+                            )
+                          ],
                         ),
                         child: Wrap(
                           spacing: 25,

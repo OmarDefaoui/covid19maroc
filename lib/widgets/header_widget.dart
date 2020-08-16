@@ -36,6 +36,8 @@ class HeaderWidget extends StatelessWidget {
                   : "${lang.translate('notToday')}",
               style: TextStyle(
                 color: Colors.white,
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
               ),
             ),
           ),

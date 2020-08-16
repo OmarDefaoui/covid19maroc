@@ -294,10 +294,12 @@ class _AddDataScreenState extends State<AddDataScreen> {
 
       //Check if newCases in cities matches with region newCases
       //and if there the two lang for the name
+      int total = 0;
       for (ModelRegion region in data.regions) {
-        int total = 0;
+        total += int.parse(region.newCases);
+        int _total = 0;
         for (ModelCity city in region.cities) {
-          total += int.parse(city.newCases);
+          _total += int.parse(city.newCases);
 
           //check availability of two lang
           if (!city.name.contains(':')) {
@@ -310,7 +312,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
             return;
           }
         }
-        if (total != int.parse(region.newCases)) {
+        if (_total != int.parse(region.newCases)) {
           setState(() => _isPerforming = false);
 
           _scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -320,6 +322,16 @@ class _AddDataScreenState extends State<AddDataScreen> {
           ));
           return;
         }
+      }
+      if (total != int.parse(data.newCases)) {
+        setState(() => _isPerforming = false);
+
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text(
+              'The sum of regions cases doesn\'t match with total new Cases'),
+          duration: Duration(seconds: 5),
+        ));
+        return;
       }
 
       //sort data
