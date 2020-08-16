@@ -46,7 +46,7 @@ class DataBoxWidget extends StatelessWidget {
                   Text(title, style: TextStyle(color: Colors.grey)),
                   SizedBox(height: 8),
                   Text(
-                    "${NumberFormat('###,###,###', 'fr').format(int.parse(cases))}",
+                    "${cases == '-' ? cases : NumberFormat('###,###,###', 'fr').format(int.parse(cases))}",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
@@ -74,7 +74,7 @@ class DataBoxWidget extends StatelessWidget {
                 Icon(Icons.trending_up, color: Colors.white, size: 18),
                 SizedBox(width: 4),
                 Text(
-                  "${NumberFormat('###,###,###', 'fr').format(int.parse(newCases))}",
+                  "${newCases == '-' ? newCases : NumberFormat('###,###,###', 'fr').format(int.parse(newCases))}",
                   style: TextStyle(color: Colors.white),
                 ),
               ],

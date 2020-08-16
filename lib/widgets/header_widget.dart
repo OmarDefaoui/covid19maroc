@@ -1,5 +1,8 @@
+import 'package:covid19morocco/providers/provider_language.dart';
 import 'package:covid19morocco/services/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class HeaderWidget extends StatelessWidget {
   final double horizontalMargin;
@@ -15,38 +18,55 @@ class HeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isNewData = isUpToDate(date);
-
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: horizontalMargin + 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      padding: EdgeInsets.only(
+        left: horizontalMargin,
+        right: horizontalMargin,
+        bottom: 25,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset('assets/images/covid19.png'),
           Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: isNewData ? Colors.green : Colors.red,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+            width: double.infinity,
+            child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 4,
+              children: [
+                Text(
+                  "${lang.translate('bilan')} ${DateFormat(lang.translate('dateFormat').toString()).format(DateTime.parse(date))}",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
+                  ),
+                ),
+                Consumer<ProviderLanguage>(
+                  builder: (context, providerLanguage, _) => Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Français'),
+                      Switch(
+                        value: providerLanguage.isFirstLanguage,
+                        onChanged: (value) {
+                          providerLanguage.setLocal(value);
+                        },
+                      ),
+                      Text('العربية'),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            child: Text(
-              isNewData
-                  ? "${lang.translate('today')}"
-                  : "${lang.translate('notToday')}",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w400,
-                fontSize: 16,
-              ),
-            ),
+          ),
+          Text(
+            "${lang.translate('source')}",
+            style: TextStyle(color: Colors.grey),
           ),
         ],
       ),
     );
-  }
-
-  bool isUpToDate(String date) {
-    return date.split(' ')[0] == DateTime.now().toString().split(' ')[0];
   }
 }

@@ -27,7 +27,6 @@ dependencies:
   firebase: ^7.3.0
   provider: ^4.3.2
   intl: ^0.16.1
-  firebase_auth: ^0.16.1
   shared_preferences: ^0.5.8
   flutter_localizations:
     sdk: flutter

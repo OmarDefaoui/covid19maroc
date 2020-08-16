@@ -15,5 +15,9 @@
     "regions": "Régions",
     "total": "Totale",
     "details": "Détails",
-    "bilan": "Le bilan du"
+    "bilan": "Le bilan du",
+    "source": "Source: Le rapport quotidien du soir du ministère de la santé",
+    "privacyPolicy": "Conditions d'utilisation",
+    "reportError": "Signaler une erreur",
+    "disclaimer": "La marge d'erreur est très faible, mais en cas d'erreur dans la saisie de données, nous ne sommes pas responsables, et l'utilisateur doit nous contacter au plus vite pour la corriger."
 }

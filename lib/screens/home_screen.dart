@@ -1,16 +1,16 @@
 import 'package:covid19morocco/models/model_data.dart';
 import 'package:covid19morocco/models/model_region.dart';
-import 'package:covid19morocco/providers/provider_language.dart';
 import 'package:covid19morocco/providers/provider_selected_region.dart';
 import 'package:covid19morocco/services/app_localizations.dart';
 import 'package:covid19morocco/services/service_data.dart';
+import 'package:covid19morocco/widgets/bottom_widget.dart';
 import 'package:covid19morocco/widgets/city_table_widget.dart';
+import 'package:covid19morocco/widgets/custom_appbar.dart';
 import 'package:covid19morocco/widgets/data_box_widget.dart';
 import 'package:covid19morocco/widgets/global_table_widget.dart';
 import 'package:covid19morocco/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
     AppLocalizations lang = AppLocalizations.of(context);
 
     return FutureBuilder<ModelData>(
-        future: ServiceData.getLocalData(isArabic),
+        future: ServiceData.getData(isArabic),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(
@@ -57,8 +57,9 @@ class HomeScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
-              title: HeaderWidget(
+              title: CustomAppBar(
                 horizontalMargin: horizontaleMargin,
+                width: width,
                 date: data.date,
                 lang: lang,
               ),
@@ -70,43 +71,10 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(25),
                   child: Column(
                     children: [
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.only(
-                          left: horizontaleMargin,
-                          right: horizontaleMargin,
-                          bottom: 25,
-                        ),
-                        child: Wrap(
-                          alignment: WrapAlignment.spaceBetween,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          spacing: 4,
-                          children: [
-                            Text(
-                              "${lang.translate('bilan')} ${DateFormat(lang.translate('dateFormat').toString()).format(DateTime.parse(data.date))}",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 18,
-                              ),
-                            ),
-                            Consumer<ProviderLanguage>(
-                              builder: (context, providerLanguage, _) => Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text('Français'),
-                                  Switch(
-                                    value: providerLanguage.isFirstLanguage,
-                                    onChanged: (value) {
-                                      providerLanguage.setLocal(value);
-                                    },
-                                  ),
-                                  Text('العربية'),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                      HeaderWidget(
+                        date: data.date,
+                        horizontalMargin: horizontaleMargin,
+                        lang: lang,
                       ),
                       Wrap(
                         spacing: 25,
@@ -203,6 +171,10 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+                      ),
+                      BottomWidget(
+                        horizontaleMargin: horizontaleMargin,
+                        lang: lang,
                       ),
                     ],
                   ),

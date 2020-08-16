@@ -46,7 +46,7 @@ class GlobalTableWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Consumer<ProviderSelectedRegion>(
               builder: (context, selectedRegion, widget) => DataTable(
-                sortColumnIndex: 1,
+                sortColumnIndex: 2,
                 columnSpacing: _getColumnSpacing(width),
                 sortAscending: true,
                 columns: [
@@ -96,7 +96,7 @@ class GlobalTableWidget extends StatelessWidget {
                             ),
                             DataCell(
                               Text(
-                                "${NumberFormat('###,###,###', 'fr').format(int.parse(region.totalCases))}",
+                                "${region.totalCases == '-' ? '-' : NumberFormat('###,###,###', 'fr').format(int.parse(region.totalCases))}",
                                 style: TextStyle(
                                   color: Colors.grey,
                                 ),
@@ -106,7 +106,7 @@ class GlobalTableWidget extends StatelessWidget {
                             ),
                             DataCell(
                               Text(
-                                "+${NumberFormat('###,###,###', 'fr').format(int.parse(region.newCases))}",
+                                "+${region.newCases == '-' ? '-' : NumberFormat('###,###,###', 'fr').format(int.parse(region.newCases))}",
                                 style: TextStyle(color: Colors.orange),
                               ),
                               onTap: () => _showRegionCities(
@@ -143,8 +143,8 @@ class GlobalTableWidget extends StatelessWidget {
     else if (width >= 450 && width < 875)
       return 29;
     else if (width < 450 && width > 363)
-      return 0; //TODO: find operation
+      return 12; //TODO: find operation
     else
-      return 0;
+      return 12;
   }
 }
