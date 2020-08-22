@@ -1,11 +1,11 @@
 {
-    "name": "covid19morocco",
-    "short_name": "covid19morocco",
+    "name": "Covid19 Maroc",
+    "short_name": "Covid19 Maroc",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Covid19 Maroc",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

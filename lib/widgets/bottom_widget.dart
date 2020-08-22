@@ -57,6 +57,7 @@ class BottomWidget extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 4),
           Text(
             "${lang.translate('disclaimer')}",
             style: TextStyle(

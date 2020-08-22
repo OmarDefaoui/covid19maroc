@@ -6,9 +6,9 @@ import 'package:covid19morocco/services/service_data.dart';
 import 'package:covid19morocco/widgets/bottom_widget.dart';
 import 'package:covid19morocco/widgets/city_table_widget.dart';
 import 'package:covid19morocco/widgets/custom_appbar.dart';
-import 'package:covid19morocco/widgets/data_box_widget.dart';
 import 'package:covid19morocco/widgets/global_table_widget.dart';
 import 'package:covid19morocco/widgets/header_widget.dart';
+import 'package:covid19morocco/widgets/overview_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
@@ -66,77 +66,22 @@ class HomeScreen extends StatelessWidget {
             ),
             body: Container(
               width: double.infinity,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(25),
-                  child: Column(
+              child: ListView(
+                padding: const EdgeInsets.all(25),
+                addAutomaticKeepAlives: true,
+                shrinkWrap: true,
+                children: [
+                  Column(
                     children: [
                       HeaderWidget(
                         date: data.date,
                         horizontalMargin: horizontaleMargin,
                         lang: lang,
                       ),
-                      Wrap(
-                        spacing: 25,
-                        runSpacing: 20,
-                        children: [
-                          DataBoxWidget(
-                            color: Colors.green,
-                            icon: Icons.tag_faces_outlined,
-                            title: "${lang.translate('recovred')}",
-                            cases: data.totalRecovred,
-                            newCases: data.newRecovred,
-                            isPhone: isPhone,
-                          ),
-                          DataBoxWidget(
-                            color: Colors.orangeAccent,
-                            icon: Icons.coronavirus_outlined,
-                            title: "${lang.translate('cases')}",
-                            cases: data.totalCases,
-                            newCases: data.newCases,
-                            isPhone: isPhone,
-                          ),
-                          DataBoxWidget(
-                            color: Colors.red,
-                            icon: Icons.person_outline,
-                            title: "${lang.translate('deaths')}",
-                            cases: data.totalDeaths,
-                            newCases: data.newDeaths,
-                            isPhone: isPhone,
-                          ),
-                          DataBoxWidget(
-                            color: Colors.blueAccent,
-                            icon: Icons.check_circle_outline,
-                            title: "${lang.translate('negatifTests')}",
-                            cases: data.totalTests,
-                            newCases: data.newTests,
-                            isPhone: isPhone,
-                          ),
-                          DataBoxWidget(
-                            color: Colors.yellow[600],
-                            icon: Icons.local_hotel_outlined,
-                            title: "${lang.translate('active')}",
-                            cases: data.totalActive,
-                            newCases: data.newActive,
-                            isPhone: isPhone,
-                          ),
-                          DataBoxWidget(
-                            color: Colors.pinkAccent,
-                            icon: Icons.local_hospital_outlined,
-                            title: "${lang.translate('critical')}",
-                            cases: data.totalCritical,
-                            newCases: data.newCritical,
-                            isPhone: isPhone,
-                          ),
-                          DataBoxWidget(
-                            color: Colors.purpleAccent,
-                            icon: Icons.view_carousel_outlined,
-                            title: "${lang.translate('artificialRespiration')}",
-                            cases: data.totalArtificialRespiration,
-                            newCases: data.newArtificialRespiration,
-                            isPhone: isPhone,
-                          ),
-                        ],
+                      OverViewWidget(
+                        lang: lang,
+                        data: data,
+                        isPhone: isPhone,
                       ),
                       Container(
                         width: double.infinity,
@@ -178,7 +123,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
             ),
           );
