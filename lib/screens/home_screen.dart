@@ -64,67 +64,61 @@ class HomeScreen extends StatelessWidget {
                 lang: lang,
               ),
             ),
-            body: Container(
-              width: double.infinity,
-              child: ListView(
-                padding: const EdgeInsets.all(25),
-                addAutomaticKeepAlives: true,
-                shrinkWrap: true,
-                children: [
-                  Column(
+            body: ListView(
+              padding: const EdgeInsets.all(25),
+              addAutomaticKeepAlives: true,
+              shrinkWrap: true,
+              children: [
+                HeaderWidget(
+                  date: data.date,
+                  horizontalMargin: horizontaleMargin,
+                  lang: lang,
+                ),
+                OverViewWidget(
+                  horizontalMargin: horizontaleMargin,
+                  lang: lang,
+                  data: data,
+                  isPhone: isPhone,
+                ),
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(
+                    horizontal: horizontaleMargin,
+                    vertical: 25,
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 0.1,
+                        spreadRadius: 0.0,
+                        offset: Offset(0, 0),
+                      )
+                    ],
+                  ),
+                  child: Wrap(
+                    spacing: 25,
+                    runSpacing: 25,
                     children: [
-                      HeaderWidget(
-                        date: data.date,
-                        horizontalMargin: horizontaleMargin,
+                      GlobalTableWidget(
+                        regions: regions,
+                        width: width,
                         lang: lang,
                       ),
-                      OverViewWidget(
-                        lang: lang,
-                        data: data,
-                        isPhone: isPhone,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.symmetric(
-                          horizontal: horizontaleMargin,
-                          vertical: 25,
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 25),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 0.1,
-                              spreadRadius: 0.0,
-                              offset: Offset(0, 0),
-                            )
-                          ],
-                        ),
-                        child: Wrap(
-                          spacing: 25,
-                          runSpacing: 25,
-                          children: [
-                            GlobalTableWidget(
-                              regions: regions,
-                              width: width,
-                              lang: lang,
-                            ),
-                            CityTableWidget(
-                              lang: lang,
-                            ),
-                          ],
-                        ),
-                      ),
-                      BottomWidget(
-                        horizontaleMargin: horizontaleMargin,
+                      CityTableWidget(
                         lang: lang,
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+                BottomWidget(
+                  horizontaleMargin: horizontaleMargin,
+                  lang: lang,
+                ),
+              ],
             ),
           );
         });
