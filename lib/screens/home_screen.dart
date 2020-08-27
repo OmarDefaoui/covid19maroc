@@ -63,32 +63,33 @@ class HomeScreen extends StatelessWidget {
                 lang: lang,
               ),
             ),
-            body: ListView(
+            body: SingleChildScrollView(
               padding: const EdgeInsets.all(25),
-              addAutomaticKeepAlives: false,
-              children: [
-                HeaderWidget(
-                  date: data.date,
-                  horizontalMargin: horizontaleMargin,
-                  lang: lang,
-                ),
-                OverViewWidget(
-                  horizontalMargin: horizontaleMargin,
-                  lang: lang,
-                  data: data,
-                  isPhone: isPhone,
-                ),
-                TablesWidget(
-                  horizontalMargin: horizontaleMargin,
-                  width: width,
-                  lang: lang,
-                  regions: regions,
-                ),
-                BottomWidget(
-                  horizontaleMargin: horizontaleMargin,
-                  lang: lang,
-                ),
-              ],
+              child: Column(
+                children: [
+                  HeaderWidget(
+                    date: data.date,
+                    horizontalMargin: horizontaleMargin,
+                    lang: lang,
+                  ),
+                  OverViewWidget(
+                    horizontalMargin: horizontaleMargin,
+                    lang: lang,
+                    data: data,
+                    isPhone: isPhone,
+                  ),
+                  TablesWidget(
+                    horizontalMargin: horizontaleMargin,
+                    width: width,
+                    lang: lang,
+                    regions: regions,
+                  ),
+                  BottomWidget(
+                    horizontaleMargin: horizontaleMargin,
+                    lang: lang,
+                  ),
+                ],
+              ),
             ),
           );
         });
